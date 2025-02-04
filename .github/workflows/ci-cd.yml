@@ -25,21 +25,32 @@ jobs:
         working-directory: ./my-react-app
         run: npm install
 
-      # - name: Run tests
-      #   working-directory: ./my-react-app
-      #   run: npm test
-
       - name: Build project
         working-directory: ./my-react-app
         run: npm run build
 
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: my-react-app/dist
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
+
       - name: Deploy to GitHub Pages
-        if: success()
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages # The deploy should go to the 'gh-pages' branch
-          folder: my-react-app/dist # Specify the build folder correctly
+          branch: gh-pages
+          folder: dist # ✅ FIXED: Remove "my-react-app/"
