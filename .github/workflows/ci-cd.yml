@@ -34,7 +34,7 @@ jobs:
         run: npm run build
 
   deploy:
-    needs: dist
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
@@ -42,4 +42,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages # The deploy should go to the 'gh-pages' branch
-          folder: my-react-app/dist # Specify the build folder correctly
+          folder: my-react-app/build # Specify the build folder correctly
