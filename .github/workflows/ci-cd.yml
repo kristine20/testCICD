@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
@@ -33,7 +33,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: vite-build
-          path: my-react-app/dist # Uploading the dist folder
+          path: my-react-app/dist # Upload the dist folder
+          retention-days: 1 # Store the artifact for 1 day
 
   deploy:
     needs: build
@@ -41,17 +42,16 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
           name: vite-build
-          path: my-react-app/dist # Restoring the dist folder
+          path: my-react-app/dist # Restore the dist folder
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages # Deploy to GitHub Pages branch
           folder: my-react-app/dist # Ensure correct build folder
-          token: ${{ secrets.GITHUB_TOKEN }}
