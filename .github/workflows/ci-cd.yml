@@ -54,3 +54,4 @@ jobs:
         with:
           branch: gh-pages # Deploy to GitHub Pages branch
           folder: my-react-app/dist # Ensure correct build folder
+          token: ${{ secrets.GITHUB_TOKEN }}
