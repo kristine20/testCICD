@@ -1,13 +1,12 @@
 name: React CI/CD
 
 on:
-  # push:
-  #   branches:
-  #     - main
-  # pull_request:
-  #   branches:
-  #     - main
-  workflow_dispatch: # Enables manual trigger
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
